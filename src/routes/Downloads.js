@@ -10,7 +10,7 @@ class Downloads extends Component {
   state = {
     data: [],
     dirty: false,
-    filename: '',
+    filename: 'illustrasjonskart_Norgeskart.zip',
     gte: moment({
       day: 1,
     }).format(DATE_FORMAT),
@@ -22,7 +22,7 @@ class Downloads extends Component {
   componentDidMount () {
     if ('chart' in this.refs && this.refs.chart.nodeName.toLowerCase() === 'canvas') {
       this.chart = new Chart(this.refs.chart, {
-        type: 'bar',
+        type: 'line',
         data: {},
         options: {
           animation: false,
@@ -40,7 +40,6 @@ class Downloads extends Component {
                 fontSize: 10,
                 min: 0,
                 stepSize: 1,
-                suggestedMax: 10,                
               }
             }]
           },
@@ -103,7 +102,7 @@ class Downloads extends Component {
         </div>
         <hr />
       </div>
-    );
+    )
   }
   changeHandler = event => {
     const { name, value } = event.target
@@ -135,11 +134,18 @@ class Downloads extends Component {
         return dataPoint.dato
       }),
       datasets: [{
-        backgroundColor: 'red',
         data: data.map(dataPoint => {
           return dataPoint.nedlastinger
         }),
         label: filename,
+        borderColor: '#fe5000',
+        borderWidth: 2,
+        fill: false,
+        hitRadius: 5,
+        lineTension: 0,
+        pointBackgroundColor: '#fe5000',
+        pointBorderWidth: 0,
+        pointRadius: 0,
       }]
     }
     this.chart.update()
