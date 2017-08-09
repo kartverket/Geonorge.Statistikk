@@ -1,0 +1,19 @@
+.navigation {
+  background-color: #b6afa8;
+  border-bottom: solid 2px #fe5000;
+}
+.navigation-item {
+  color: #414042;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 15px;
+  text-decoration: none;
+}
+.navigation-item:hover {
+  text-decoration: underline;
+}
+.navigation-item.active {
+  background-color: #545355;
+  color: #fff;
+}
