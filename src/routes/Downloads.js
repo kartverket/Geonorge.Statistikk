@@ -69,59 +69,39 @@ class Downloads extends Component {
   render () {
     const { filename, gte, lte } = this.state
     return (
-      <div className="container">
-        <Heading title="Nedlastinger" />
-        
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="form-group">
-              <label htmlFor="filename">Filnavn</label>
-              <div className="input-group">
-                <span className="input-group-addon">
-                  <span className="glyphicon glyphicon-file" />
-                </span>
-                <input className="form-control" id="filename" name="filename" onChange={this.changeHandler} value={ filename } />
-              </div>
-            </div>
+      <div>
+        <div className="w3-container">
+          <Heading title="Nedlastinger" />
+        </div>
+        <div className="w3-row-padding">
+          <div className="w3-col m6">
+            <label htmlFor="filename">Filnavn</label>
+            <input className="w3-input w3-border" id="filename" name="filename" onChange={this.changeHandler} value={ filename } />
           </div>
-          <div className="col-sm-3">
-            <div className="form-group">
-              <label htmlFor="gte">Fra</label>
-              <div className="input-group">
-                <input className="form-control" id="gte" name="gte" onChange={this.changeHandler} value={ gte } />
-                <div className="input-group-btn">
-                  <button aria-label="Help" className="btn btn-default" type="button">
-                    <span className="glyphicon glyphicon-calendar" />
-                  </button>
-                </div>
-              </div>
-            </div>
+          <div className="w3-col m3">
+            <label htmlFor="gte">Fra</label>
+            <input className="w3-input w3-border" id="gte" name="gte" onChange={this.changeHandler} value={ gte } />
           </div>
-          <div className="col-sm-3">
-            <div className="form-group">
-              <label htmlFor="lte">Til</label>
-              <div className="input-group">
-                <input className="form-control" id="lte" name="lte" onChange={this.changeHandler} value={ lte } />
-                <div className="input-group-btn">
-                  <button aria-label="Help" className="btn btn-default" type="button">
-                    <span className="glyphicon glyphicon-calendar" />
-                  </button>
-                </div>
-              </div>
-            </div>
+          <div className="w3-col m3">
+            <label htmlFor="lte">Til</label>
+            <input className="w3-input w3-border" id="lte" name="lte" onChange={this.changeHandler} value={ lte } />
           </div>
-          <div className="col-sm-2 col-sm-offset-10">
-            <div className="form-group">
-              <button className="btn btn-default btn-block" onClick={this.clickHandler.bind(this)} type="button">Hent</button>
+          <div className="w3-col m12">
+            <button className="w3-button w3-gray w3-right w3-margin-top" onClick={this.clickHandler.bind(this)} type="button">Hent</button>
+          </div>
+        </div>
+        <hr />
+        <div className="w3-container">
+          <div className="w3-card">
+            <header className="w3-container">
+              <h3>Resultater</h3>
+            </header>
+            <div>
+              <canvas ref="chart" />
             </div>
           </div>
         </div>
-        <div className="panel panel-default">
-          <div className="panel-heading">Resultat</div>
-          <div>
-            <canvas ref="chart" />
-          </div>
-        </div>
+        <hr />
       </div>
     );
   }
