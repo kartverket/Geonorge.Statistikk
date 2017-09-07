@@ -1,0 +1,134 @@
+.select {
+  position: relative;
+}
+.select .selected {
+  border: solid 1px #cfcfcf;
+  min-height: 30px;
+  padding: 0px 30px 0px 0px;
+  position: relative;
+}
+
+.select .toggle {
+  background-color: transparent;
+  background-image: url(../svg/caret-down.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+}
+.select.open .toggle {
+  background-image: url(../svg/caret-up.svg);
+}
+.select .list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.select .item-empty,
+.select .item-on {
+  background-color: #efeeed;
+  color: #414042;
+  display: block;
+  height: 26px;
+  line-height: 26px;
+  margin: 2px;
+  padding: 0px 30px 0px 10px;
+  position: relative;
+}
+.select .item-empty,
+.select .item-on.no-close {
+  padding-right: 10px;
+}
+.select .item-empty {
+  font-style: italic;
+}
+.select .items {
+  background-color: #fff;
+  border: solid 1px #cfcfcf;
+  display: none;
+  left: 0px;
+  position: absolute;
+  right: 0px;
+  top: 100%;
+  z-index: 100;
+}
+.select.open .items {
+  display: block;
+}
+.select .item-off {
+  color: #3867c8;
+  cursor: pointer;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px;
+}
+.select .item-off:hover {
+  text-decoration: underline;
+}
+.select .item-off.active {
+  color: #cfcfcf;
+  cursor: default;
+  text-decoration: none;
+}
+.select .close {
+  background-color: #7da1c4;
+  background-image: url(../svg/close.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  height: 26px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 26px;
+}
+.select .close:hover {
+  background-color: #fe5000;
+}
+.select .truncate {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.select .loading {
+  background-color: rgba(255,255,255,0.5);
+  bottom: 0px;
+  display: none;
+  left: 0px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.select.pending .loading {
+  display: block;
+}
+.select .search {
+  padding: 5px 5px 0px 5px;
+}
+.select .search input {
+  border: solid 1px #cfcfcf;
+  padding: 2px 4px;
+  width: 100%;
+}
+.select .overlay {
+  background-color: transparent;
+  bottom: 0px;
+  display: none;
+  left: 0px;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+}
+.select.open .overlay {
+  cursor: not-allowed;
+  display: block;
+}
