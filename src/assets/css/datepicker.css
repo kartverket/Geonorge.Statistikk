@@ -1,0 +1,8 @@
+.datepicker {
+  border: solid 1px #cfcfcf;
+  display: inline-block;
+  white-space: nowrap;
+}
+.datepicker select {
+  border: none;
+}
