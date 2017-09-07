@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import './Header.css';
-import geonorge_logo from '../assets/geonorge_logo.svg'
+import '../assets/css/header.css';
+import geonorge_logo from '../assets/svg/geonorge_logo.svg'
 
 class Header extends Component {
   render () {

@@ -2,10 +2,13 @@
   padding: 20px 0px;
 }
 .heading h1 {
-  font-size: 66px;
+  font-size: 45px;
   font-weight: 100;
+  overflow: hidden;
   padding-bottom: 20px;
   position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .heading h1:after {
   background-color: #fe5000;
@@ -15,4 +18,9 @@
   left: 0px;
   position: absolute;
   width: 100px;
+}
+@media (min-width: 601px) {
+  .heading h1 {
+    font-size: 65px;
+  }
 }
