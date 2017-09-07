@@ -1,0 +1,37 @@
+.pagination {
+  border-top: solid 1px #cfcfcf;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 13px;
+  margin: 0 10px;
+  padding: 5px 0;
+}
+.pagination .middle {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0;
+  flex: 1 0;
+  text-align: center;
+}
+.pagination .left,
+.pagination .right {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 1;
+  flex: 0 1;
+}
+.pagination .left {
+  text-align: left;
+}
+.pagination .right {
+  text-align: right;
+}
+.pagination button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+.pagination button:disabled {
+  cursor: no-drop;
+}
