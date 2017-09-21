@@ -67,15 +67,13 @@ class Downloads extends Component {
     const { id : datasetId = '' } = dataset
     const fileUrl = `https://status.geonorge.no/statistikkApi/filliste?datasett=${datasetId}`
     return (
-      <div>
-        <div className="w3-container">
-          <Heading title="Nedlastinger" />
-        </div>
-        <div className="w3-row-padding w3-margin-bottom">
-          <div className="w3-col m6 w3-left-align">
+      <div className="container">
+        <Heading title="Nedlastinger" />
+        <div className="row">
+          <div className="col-sm-6 text-left">
             &nbsp;
           </div>
-          <div className="w3-col m6 w3-right-align">
+          <div className="col-sm-6 text-right">
             Datovelger:
             &nbsp;
             <Datepicker datetime={gte} onChange={this.gteUpdate.bind(this)} />
@@ -83,8 +81,8 @@ class Downloads extends Component {
             <Datepicker datetime={lte} onChange={this.lteUpdate.bind(this)} />
           </div>
         </div>
-        <div className="w3-container w3-margin-bottom">
-          <div>Dataeier</div>
+        <div className="form-group">
+          <div className="form-control-static">Dataeier</div>
           <SelectSingle
             apiKey="navn"
             apiName="navn"
@@ -93,8 +91,8 @@ class Downloads extends Component {
             selected={owner}
           />
         </div>
-        <div className="w3-container w3-margin-bottom">
-          <div>Datasett</div>
+        <div className="form-group">
+          <div className="form-control-static">Datasett</div>
           <SelectSingle
             apiKey="id"
             apiName="navn"
@@ -103,8 +101,8 @@ class Downloads extends Component {
             selected={dataset}
           />
         </div>
-        <div className="w3-container w3-margin-bottom">
-          <div>Filer</div>
+        <div className="form-group">
+          <div className="form-control-static">Filer</div>
           <SelectMulti
             apiKey="id"
             apiName="filnavn"
@@ -112,20 +110,17 @@ class Downloads extends Component {
             onUpdate={this.filesUpdate.bind(this)}
             selected={files} />
         </div>
-        <div className="w3-container w3-margin-bottom">
-          <button className="w3-button w3-gray w3-right w3-margin-top" disabled={files.length === 0} onClick={this.clickHandler.bind(this)} type="button">Vis nedlastinger</button>
+        <div className="form-group text-right">
+          <button className="btn btn-info" disabled={files.length === 0} onClick={this.clickHandler.bind(this)} type="button">Vis nedlastinger</button>
         </div>
-        <div className="w3-container">
-          <div className="w3-card">
-            <header className="w3-container">
-              <h3>Resultater</h3>
-            </header>
-            <div>
-              <canvas ref="chart" />
-            </div>
+        <div className="card">
+          <div className="card-header">
+            Resultater
+          </div>
+          <div>
+            <canvas ref="chart" />
           </div>
         </div>
-        <hr />
       </div>
     )
   }

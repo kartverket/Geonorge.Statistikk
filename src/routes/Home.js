@@ -6,7 +6,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="w3-container">
+        <div className="container">
           <Heading title="Hjem" />
         </div>
       </div>

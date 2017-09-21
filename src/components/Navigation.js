@@ -7,8 +7,10 @@ class Navigation extends Component {
   render () {
     return (
       <nav className="navigation">
-        <NavLink activeClassName="active" className="navigation-item" exact to="/">Hjem</NavLink>
-        <NavLink activeClassName="active" className="navigation-item" to="/nedlastinger">Nedlastinger</NavLink>
+        <div className="container">
+          <NavLink activeClassName="active" className="navigation-item" exact to="/">Hjem</NavLink>
+          <NavLink activeClassName="active" className="navigation-item" to="/nedlastinger/">Nedlastinger</NavLink>
+        </div>
       </nav>
     )
   }
