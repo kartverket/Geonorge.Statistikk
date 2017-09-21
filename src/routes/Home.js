@@ -53,10 +53,10 @@ class Home extends Component {
             <h3>Nedlastinger per måned, for <b>{yearActive}</b></h3>
             <ResponsiveContainer height={400} width="100%">
               <BarChart data={monthData} layout="vertical">
-                <XAxis tickFormatter={this.formatThousand} type="number"/>
-                <YAxis dataKey="name" padding={{ left: 10, right: 10 }} tickFormatter={ value => value.substr(0, 3) } type="category" />
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Bar dataKey="count" fill="#0056b3" />
+                <XAxis tickFormatter={this.formatThousand} type="number"/>
+                <YAxis dataKey="name" padding={{ left: 10, right: 10 }} tickFormatter={ value => value.substr(0, 3) } type="category" />
               </BarChart>
             </ResponsiveContainer>
           </div>
