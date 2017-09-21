@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import Chart from 'chart.js'
+import { CartesianGrid, ResponsiveContainer, Legend, LineChart, Line, XAxis, YAxis } from 'recharts'
 
 import Datepicker from '../components/Datepicker'
 import Heading from '../components/Heading'
 import SelectSingle from '../components/SelectSingle'
 import SelectMulti from '../components/SelectMulti'
 
+const API_URL = 'https://status.geonorge.no/statistikkApi'
+const COLORS = ['#7293cb','#e1974c','#84ba5b','#d35e60','#808585','#9067a7','#ab6857','#ccc210']
 const DATE_FORMAT = 'YYYY-MM-DD'
+const toJSON = response => response.json()
 
 class Downloads extends Component {
   state = {
     dataset: {},
+    downloadsData: [],
     files: [],
     gte: moment({
       day: 1,
@@ -22,50 +26,24 @@ class Downloads extends Component {
     owner: {},
     pending: false,
   }
-  componentDidMount () {
-    if ('chart' in this.refs && this.refs.chart.nodeName.toLowerCase() === 'canvas') {
-      this.chart = new Chart(this.refs.chart, {
-        type: 'line',
-        data: {},
-        options: {
-          animation: false,
-          scales: {
-            xAxes: [{
-              ticks: {
-                fontFamily: 'sans-serif',
-                fontSize: 10,
-              },
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                fontFamily: 'sans-serif',
-                fontSize: 10,
-                min: 0,
-              }
-            }]
-          },
-          tooltips: {
-            callbacks: {
-              title: function (tooltipItem) {
-                return moment(tooltipItem[0].xLabel).format('LL')
-              }
-            },
-          }
-        }
-      })
+  componentDidUpdate (prevProps, prevState) {
+    const { pending:wasPending } = prevState
+    const { pending:isPending } = this.state
+    if (wasPending === false && isPending === true) {
+      document.getElementById('modal-backdrop').classList.remove('d-none')
+    }
+    if (wasPending === true && isPending === false) {
+      document.getElementById('modal-backdrop').classList.add('d-none')
     }
   }
-  componentWillUnmount () {
-    this.chart.destroy()
-  }
   render () {
-    const { dataset, files, gte, lte, owner } = this.state
-    const ownerUrl = 'https://status.geonorge.no/statistikkApi/eiere'
+    const { dataset, downloadsData, files, gte, lte, owner } = this.state
+    const ownerUrl = `${API_URL}/eiere`
     const { id : ownerId = '' } = owner
-    const datasetUrl = `https://status.geonorge.no/statistikkApi/datasett?eier=${ownerId}`
+    const datasetUrl = `${API_URL}/datasett?eier=${ownerId}`
     const { id : datasetId = '' } = dataset
-    const fileUrl = `https://status.geonorge.no/statistikkApi/filliste?datasett=${datasetId}`
+    const fileUrl = `${API_URL}/filliste?datasett=${datasetId}`
+    const keys = downloadsData.length === 0 ? [] : Object.keys(downloadsData[0]).filter(key => key === 'name' ? false : true)
     return (
       <div className="container">
         <Heading title="Nedlastinger" />
@@ -117,51 +95,47 @@ class Downloads extends Component {
           <div className="card-header">
             Resultater
           </div>
-          <div>
-            <canvas ref="chart" />
-          </div>
+          <ResponsiveContainer height={400} width="100%">
+            <LineChart data={downloadsData}>
+              <Legend />
+              <CartesianGrid strokeDasharray="3 3" />
+              {keys.map( (key, index) => (
+                <Line dataKey={key} key={key} stroke={COLORS[index]} />
+              ))}
+              <XAxis dataKey="name" tickFormatter={ value => `${value.substr(8, 2)}` } />
+              <YAxis />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
     )
   }
-  chartUpdate () {
-    this.chart.update()
-  }
   clickHandler () {
     this.setState({
       pending: true,
-    }, this.dataLoadFetch)
+    }, this.downloadsLoad)
   }
-  dataLoadFetch () {
+  downloadsLoad () {
     const { files, gte, lte } = this.state
-    Promise.all(files.map(item => fetch(`https://status.geonorge.no/statistikkApi/nedlastinger?filnavn=${item.name}&fra=${gte}&til=${lte}`)))
-    .then(
-      responses => Promise.all(
-        responses.map(
-          response => response.json()
-        )
-      )
-    )
+    Promise.all(files.map(item => fetch(`${API_URL}/nedlastinger?filnavn=${item.name}&fra=${gte}&til=${lte}`)))
+    .then(responses => Promise.all(responses.map(toJSON)))
     .then(responses => {
-      const colors = ['#7293cb','#e1974c','#84ba5b','#d35e60','#808585','#9067a7','#ab6857','#ccc210']
-      this.chart.data = {
-        labels: responses[0].nedlastinger.map(dataPoint => dataPoint.dato),
-        datasets: responses.map( (data, index) => ({
-          data: data.nedlastinger.map(dataPoint => dataPoint.antall),
-          label: data.filnavn,
-          borderColor: colors[index],
-          borderWidth: 2,
-          fill: false,
-          hitRadius: 5,
-          lineTension: 0,
-          pointBackgroundColor: colors[index],
-          pointBorderWidth: 0,
-          pointRadius: 2,
-        })),
-      }
+      const downloadsData = []
+      responses.forEach( (response, outerIndex) => {
+        const { filnavn:key, nedlastinger:items } = response
+        items.forEach( (item, innerIndex) => {
+          if (outerIndex === 0) {
+            downloadsData.push({
+              name: item.dato,
+            })
+          }
+          downloadsData[innerIndex][key] = item.antall
+        })
+      })
       this.setState({
+        downloadsData: downloadsData,
         pending: false,
-      }, this.chartUpdate)
+      })
     })
   }
   datasetUpdate (dataset) {
