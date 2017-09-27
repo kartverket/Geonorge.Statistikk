@@ -9,6 +9,7 @@ class Navigation extends Component {
       <nav className="navigation">
         <div className="container">
           <NavLink activeClassName="active" className="navigation-item" exact to="/">Hjem</NavLink>
+          <NavLink activeClassName="active" className="navigation-item" to="/datasett/">Datasett</NavLink>
           <NavLink activeClassName="active" className="navigation-item" to="/nedlastinger/">Nedlastinger</NavLink>
         </div>
       </nav>
