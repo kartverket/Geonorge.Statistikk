@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import Heading from '../components/Heading'
 import Durations from '../components/Durations'
@@ -7,16 +7,17 @@ import Durations from '../components/Durations'
 const API_URL = 'https://status.geonorge.no/statistikkApi'
 const toJSON = response => response.json()
 
-class Datasets extends Component {
+class Dataset extends Component {
   state = {
-    datasetsData: [],
+    datasetData: [],
+    datasetName: '',
     duration: this.getQuery('duration', '24H'),
     pending: false,
   }
   componentDidMount () {
     this.setState({
       pending: true,
-    }, this.datasetsDataLoad)
+    }, this.datasetDataLoad)
   }
   componentDidUpdate (prevProps, prevState) {
     const { pending:wasPending } = prevState
@@ -29,48 +30,35 @@ class Datasets extends Component {
     }
   }
   render() {
-    const { datasetsData, duration } = this.state
+    const { datasetData, datasetName, duration } = this.state
     return (
       <div className="container">
-        <Heading title="Datasett" />
+        <Heading title={`Datasett - ${datasetName}`} />
         <div aria-label="..." className="btn-toolbar justify-content-between mb-3" role="toolbar">
           <div />
           <Durations setDuration={this.setDuration.bind(this)} value={duration} />
         </div>
-        <table className="table table-responsive table-bordered table-sm">
-          <thead className="thead-default">
-            <tr>
-              <th>Tittel</th>
-              <th>Eier</th>
-              <th>Nedlastinger</th>
-            </tr>
-          </thead>
-          <tbody>
-            {datasetsData.length === 0 ? (
-              <tr>
-                <td colSpan="3">Ingen resultat</td>
-              </tr>
-            ) : datasetsData.map( ({ id, name, owner, downloads }) => (
-              <tr key={id}>
-                <td>
-                  <NavLink to={`/datasett/${id}/?duration=${duration}`}>{name}</NavLink>
-                </td>
-                <td>{owner}</td>
-                <td className="text-right">{downloads.toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ResponsiveContainer height={400} width="100%">
+          <BarChart data={datasetData}>
+            <Tooltip />
+            <Bar dataKey="downloads" fill="#fe5000" />
+            <XAxis dataKey="label" />
+            <YAxis />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     )
   }
-  datasetsDataLoad () {
+  datasetDataLoad () {
+    const { id } = this.props.match.params
     const { duration } = this.state
-    const url = `${API_URL}/datasett/?duration=${duration}`
+    const url = `${API_URL}/datasett/${id}/?duration=${duration}`
     fetch(url).then(toJSON)
     .then( response => {
+      console.log(response)
       this.setState({
-        datasetsData: response.results,
+        datasetData: response.results,
+        datasetName: response.name,
         pending: false,
       })
     })
@@ -85,8 +73,8 @@ class Datasets extends Component {
     this.setState({
       duration: duration,
       pending: true,
-    }, this.datasetsDataLoad)
+    }, this.datasetDataLoad)
   }
 }
 
-export default Datasets
+export default Dataset
