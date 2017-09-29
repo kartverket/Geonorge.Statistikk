@@ -24,7 +24,7 @@ class Dataset extends Route {
     const { datasetData, datasetName, duration } = this.state
     return (
       <div className="container">
-        <Heading title={`Datasett - ${datasetName}`} />
+        <Heading title={datasetName} />
         <div aria-label="..." className="btn-toolbar justify-content-between mb-3" role="toolbar">
           <div />
           <Durations setDuration={this.setDuration.bind(this)} value={duration} />
