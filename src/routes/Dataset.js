@@ -40,8 +40,8 @@ class Dataset extends Component {
         </div>
         <ResponsiveContainer height={400} width="100%">
           <BarChart data={datasetData}>
-            <Tooltip />
-            <Bar dataKey="downloads" fill="#fe5000" />
+            <Tooltip content={this.tooltipContent.bind(this)} cursor={{ fill: '#eee' }} isAnimationActive={false} position={{y: 10}} />
+            <Bar dataKey="downloads" fill="#fe5000" maxBarSize={20} />
             <XAxis dataKey="label" />
             <YAxis />
           </BarChart>
@@ -74,6 +74,14 @@ class Dataset extends Component {
       duration: duration,
       pending: true,
     }, this.datasetDataLoad)
+  }
+  tooltipContent (data) {
+    const [ payload = null ] = data.payload
+    return payload === null ? null : (<div style={{ backgroundColor: 'rgba(51,51,51,0.5)', borderRadius: '3px', color: '#fff', padding: '5px' }}>
+      <small>{payload.payload.date.substr(0, 16).replace('T', ' ')}</small>
+      <br />
+      <b>{payload.payload.downloads}</b>
+    </div>)
   }
 }
 
