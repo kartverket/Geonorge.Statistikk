@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import Route from './Route'
+
+import React from 'react'
 import { BarChart, Bar, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 import Heading from '../components/Heading'
@@ -6,10 +8,9 @@ import Heading from '../components/Heading'
 const API_URL = 'https://status.geonorge.no/statistikkApi'
 const toJSON = response => response.json()
 
-class Home extends Component {
+class Home extends Route {
   state = {
     monthData: [],
-    pending: false,
     yearActive: 0,
     yearData: [],
   }
@@ -17,16 +18,6 @@ class Home extends Component {
     this.setState({
       pending: true,
     }, this.yearDataLoad)
-  }
-  componentDidUpdate (prevProps, prevState) {
-    const { pending:wasPending } = prevState
-    const { pending:isPending } = this.state
-    if (wasPending === false && isPending === true) {
-      document.getElementById('modal-backdrop').classList.remove('d-none')
-    }
-    if (wasPending === true && isPending === false) {
-      document.getElementById('modal-backdrop').classList.add('d-none')
-    }
   }
   render() {
     const { monthData, yearActive, yearData } = this.state

@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import Route from './Route'
+
+import React from 'react'
 import moment from 'moment'
 import { CartesianGrid, ResponsiveContainer, Legend, LineChart, Line, XAxis, YAxis } from 'recharts'
 
@@ -12,7 +14,7 @@ const COLORS = ['#7293cb','#e1974c','#84ba5b','#d35e60','#808585','#9067a7','#ab
 const DATE_FORMAT = 'YYYY-MM-DD'
 const toJSON = response => response.json()
 
-class Downloads extends Component {
+class Downloads extends Route {
   state = {
     dataset: {},
     downloadsData: [],
@@ -24,17 +26,6 @@ class Downloads extends Component {
       day: moment().daysInMonth(),
     }).format(DATE_FORMAT),
     owner: {},
-    pending: false,
-  }
-  componentDidUpdate (prevProps, prevState) {
-    const { pending:wasPending } = prevState
-    const { pending:isPending } = this.state
-    if (wasPending === false && isPending === true) {
-      document.getElementById('modal-backdrop').classList.remove('d-none')
-    }
-    if (wasPending === true && isPending === false) {
-      document.getElementById('modal-backdrop').classList.add('d-none')
-    }
   }
   render () {
     const { dataset, downloadsData, files, gte, lte, owner } = this.state

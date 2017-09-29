@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import Route from './Route'
+
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import Heading from '../components/Heading'
@@ -7,26 +9,15 @@ import Durations from '../components/Durations'
 const API_URL = 'https://status.geonorge.no/statistikkApi'
 const toJSON = response => response.json()
 
-class Datasets extends Component {
+class Datasets extends Route {
   state = {
     datasetsData: [],
     duration: this.getQuery('duration', '24H'),
-    pending: false,
   }
   componentDidMount () {
     this.setState({
       pending: true,
     }, this.datasetsDataLoad)
-  }
-  componentDidUpdate (prevProps, prevState) {
-    const { pending:wasPending } = prevState
-    const { pending:isPending } = this.state
-    if (wasPending === false && isPending === true) {
-      document.getElementById('modal-backdrop').classList.remove('d-none')
-    }
-    if (wasPending === true && isPending === false) {
-      document.getElementById('modal-backdrop').classList.add('d-none')
-    }
   }
   render() {
     const { datasetsData, duration } = this.state
@@ -74,12 +65,6 @@ class Datasets extends Component {
         pending: false,
       })
     })
-  }
-  getQuery (key, fallback = '') {
-    const { search } = window.location
-    const regexp = new RegExp(`${key}=(.*?)&`)
-    const match = `${search}&`.match(regexp)
-    return match === null ? fallback : match[1]
   }
   setDuration (duration) {
     this.setState({
