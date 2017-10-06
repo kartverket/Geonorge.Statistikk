@@ -82,11 +82,11 @@ class Dataset extends Route {
     }, this.datasetDataLoad)
   }
   tooltipContent (data) {
-    const [ payload = null ] = data.payload
+    const payload = (data.payload !== null && data.payload.length > 0) ? data.payload[0].payload : null
     return payload === null ? null : (<div style={{ backgroundColor: 'rgba(51,51,51,0.5)', borderRadius: '3px', color: '#fff', padding: '5px' }}>
-      <small>{payload.payload.date.substr(0, 16).replace('T', ' ')}</small>
+      <small>{payload.date.substr(0, 16).replace('T', ' ')}</small>
       <br />
-      <b>{payload.payload.downloads}</b>
+      <b>{payload.downloads}</b>
     </div>)
   }
 }
