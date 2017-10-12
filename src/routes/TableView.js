@@ -20,26 +20,23 @@ class TableView extends Base {
       pending: true,
     }, this.dataLoad)
   }
-  componentWillReceiveProps(nextProps) {
-    const prevParams = qs.parse(this.props.location.search)
-    const { duration : prevDuration = Constants.DEFAULT_DURATION } = prevParams
-    const nextParams = qs.parse(nextProps.location.search)
-    const { duration : nextDuration = Constants.DEFAULT_DURATION } = nextParams
-    if (nextDuration !== prevDuration) {
-      this.setState({
-        pending: true,
-      }, this.dataLoad)
-    }
-  }
   render () {
     const { location, title } = this.props
     const { pathname } = location
+    const query = qs.parse(location.search)
+    const { duration } = query
+    const search = qs.stringify({
+      duration: duration,
+    })
     const { response } = this.state
     const { results = [], total = 0 } = response
     const rows = results.map( ({ id, name, downloads }) => (
       <tr key={id}>
         <td>
-          <Link to={`${pathname}${id}/`}>{name}</Link>
+          <Link to={{
+            pathname: `${pathname}${id}/`,
+            search: search,
+          }}>{name}</Link>
         </td>
         <td className="text-right">
           {downloads.toLocaleString()}
