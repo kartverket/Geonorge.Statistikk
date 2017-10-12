@@ -1,3 +1,5 @@
+import * as Constants from '../Constants'
+
 import Base from './Base'
 
 import PropTypes from 'prop-types'
@@ -7,8 +9,6 @@ import { Link, Route } from 'react-router-dom'
 
 import Durations from '../components/Durations'
 import Heading from '../components/Heading'
-
-const API_URL = 'https://status.geonorge.no/statistikkApi'
 
 class TableView extends Base {
   state = {
@@ -22,9 +22,9 @@ class TableView extends Base {
   }
   componentWillReceiveProps(nextProps) {
     const prevParams = qs.parse(this.props.location.search)
-    const { duration : prevDuration = '24H' } = prevParams
+    const { duration : prevDuration = Constants.DEFAULT_DURATION } = prevParams
     const nextParams = qs.parse(nextProps.location.search)
-    const { duration : nextDuration = '24H' } = nextParams
+    const { duration : nextDuration = Constants.DEFAULT_DURATION } = nextParams
     if (nextDuration !== prevDuration) {
       this.setState({
         pending: true,
@@ -74,8 +74,8 @@ class TableView extends Base {
   dataLoad () {
     const { location, service } = this.props
     const params = qs.parse(location.search)
-    const { duration = '24H' } = params
-    const url = `${API_URL}/${service}/?duration=${duration}`
+    const { duration = Constants.DEFAULT_DURATION } = params
+    const url = `${Constants.API_URL}/${service}/?duration=${duration}`
     fetch(url).then(this.toJSON)
     .then( response => {
       this.setState({

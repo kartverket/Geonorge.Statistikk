@@ -1,3 +1,5 @@
+import * as Constants from '../Constants'
+
 import React, { Component } from 'react'
 
 import qs from 'query-string'
@@ -33,7 +35,7 @@ class Durations extends Component {
     const { pathname = '/', search = '' } = location
     const { durations } = this.state
     const params = qs.parse(search)
-    const { duration : selected = '24H' } = params
+    const { duration : selected = Constants.DEFAULT_DURATION } = params
     return (
       <div aria-label="Durations" className="btn-group btn-group-sm" role="group">
         {durations.map( duration => (
