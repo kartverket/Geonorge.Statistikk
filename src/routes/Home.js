@@ -1,53 +1,41 @@
-import Route from './Route'
+import Base from './Base'
+import * as Constants from '../Constants'
 
 import React from 'react'
-import { BarChart, Bar, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import Heading from '../components/Heading'
 
-const API_URL = 'https://status.geonorge.no/statistikkApi'
-const toJSON = response => response.json()
-
-class Home extends Route {
+class Home extends Base {
   state = {
-    monthData: [],
-    yearActive: 0,
-    yearData: [],
+    dataYear: {},
+    pending: false,
   }
   componentDidMount () {
     this.setState({
       pending: true,
-    }, this.yearDataLoad)
+    }, this.dataLoad)
   }
-  render() {
-    const { monthData, yearActive, yearData } = this.state
+  render () {
+    const { dataYear } = this.state
+    const { results = [], total = 0 } = dataYear
     return (
       <div className="container">
-        <Heading title="Hjem" />
+        <Heading title="Statistikk" />
         <div className="row">
           <div className="col-sm-6">
-            <h3>Nedlastinger, per år</h3>
-            <ResponsiveContainer height={400} width="100%">
-              <BarChart data={yearData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <Bar dataKey="count" onClick={this.handleYearClick.bind(this)}>
-                  {yearData.map( (entry, index) => 
-                    (<Cell cursor="pointer" fill={entry.key === yearActive ? '#fe5000' : '#b6afa8' } key={`cell-${index}`}/>)
-                  )}
-                </Bar>
-                <XAxis dataKey="name" />
-                <YAxis tickFormatter={this.formatThousand} />
-              </BarChart>
-            </ResponsiveContainer>
+            <h2>Antall nedlastede filer - pr år</h2>
+            <p>Viser alle etater, som har direkte nedlasting via Geonorge. Nedlastinger via egne nettsteder er ikke del av infrastrukturen.</p>
+            <p>Periode: Fra start av måling i 2015 og fram til i dag.</p>
+            <p>Totalt: <b>{total.toLocaleString()}</b> nedlastinger.</p>
           </div>
           <div className="col-sm-6">
-            <h3>Nedlastinger per måned, for <b>{yearActive}</b></h3>
-            <ResponsiveContainer height={400} width="100%">
-              <BarChart data={monthData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3"/>
-                <Bar dataKey="count" fill="#0056b3" />
-                <XAxis tickFormatter={this.formatThousand} type="number"/>
-                <YAxis dataKey="name" padding={{ left: 10, right: 10 }} tickFormatter={ value => value.substr(0, 3) } type="category" />
+            <ResponsiveContainer height={200} width="100%">
+              <BarChart data={results}>
+                <Tooltip />
+                <Bar dataKey="downloads" fill="#fe5000" maxBarSize={20} />
+                <XAxis dataKey="year" />
+                <YAxis />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -55,36 +43,14 @@ class Home extends Route {
       </div>
     )
   }
-  formatThousand = value => value > 1000 ? `${value / 1000}k` : value
-  handleYearClick (data, index) {
-    const { yearActive } = this.state
-    if (yearActive !== data.key) {
-      this.setState({
-        pending: true,
-        yearActive: data.key,
-      }, this.monthDataLoad)
-    }
-  }
-  monthDataLoad () {
-    const { yearActive } = this.state
-    const url = `${API_URL}/intervall/${yearActive}/`
-    fetch(url).then(toJSON)
+  dataLoad () {
+    const url = `${Constants.API_URL}/`
+    fetch(url).then(this.toJSON)
     .then( response => {
       this.setState({
-        monthData: response.results,
+        dataYear: response,
         pending: false,
       })
-    })
-  }
-  yearDataLoad () {
-    const url = `${API_URL}/intervall/`
-    fetch(url).then(toJSON)
-    .then( response => {
-      const yearActive = response.results.reduce( (total, item) => total > item.key ? total : item.key )
-      this.setState({
-        yearActive: yearActive,
-        yearData: response.results,
-      }, this.monthDataLoad)
     })
   }
 }
