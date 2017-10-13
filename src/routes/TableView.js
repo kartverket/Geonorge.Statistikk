@@ -1,6 +1,5 @@
-import * as Constants from '../Constants'
-
 import Base from './Base'
+import * as Constants from '../Constants'
 
 import PropTypes from 'prop-types'
 import qs from 'query-string'
@@ -73,10 +72,14 @@ class TableView extends Base {
     const params = qs.parse(location.search)
     const { duration = Constants.DEFAULT_DURATION } = params
     const url = `${Constants.API_URL}/${service}/?duration=${duration}`
-    fetch(url).then(this.toJSON)
-    .then( response => {
+    fetch(url).then(this.toJSON).then( response => {
       this.setState({
         response: response,
+        pending: false,
+      })
+    }).catch(err => {
+      alert(err)
+      this.setState({
         pending: false,
       })
     })

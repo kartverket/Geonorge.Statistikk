@@ -1,6 +1,5 @@
-import * as Constants from '../Constants'
-
 import Base from './Base'
+import * as Constants from '../Constants'
 
 import moment from 'moment'
 import PropTypes from 'prop-types'
@@ -70,10 +69,14 @@ class DetailView extends Base {
     const query = qs.parse(location.search)
     const { duration = Constants.DEFAULT_DURATION } = query
     const url = `${Constants.API_URL}/${service}/${id}/?duration=${duration}`
-    fetch(url).then(this.toJSON)
-    .then( response => {
+    fetch(url).then(this.toJSON).then( response => {
       this.setState({
         data: response,
+        pending: false,
+      })
+    }).catch(err => {
+      alert(err)
+      this.setState({
         pending: false,
       })
     })
