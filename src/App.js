@@ -20,28 +20,28 @@ class App extends Component {
           <Route component={Navigation} path="/" />
           <Route component={Home} exact path="/" />
           <Route exact path="/datasett/:id([0-9]+)/" render={(props) => (
-            <DetailView {...props} service="datasett" />
+            <DetailView {...props} service="datasets" />
           )} />
           <Route exact path="/datasett/" render={(props) => (
-            <TableView {...props} service="datasett" title="Datasett" />
+            <TableView {...props} service="datasets" title="Datasett" />
           )} />
           <Route exact path="/eiere/:id([a-z\-]+)/" render={(props) => (
-            <DetailView {...props} service="eiere" />
+            <DetailView {...props} service="owners" />
           )} />
           <Route exact path="/eiere/" render={(props) => (
-            <TableView {...props} service="eiere" title="Eiere" />
+            <TableView {...props} service="owners" title="Eiere" />
           )} />
           <Route exact path="/projeksjoner/:id([0-9a-z]+)/" render={(props) => (
-            <DetailView {...props} service="projeksjoner" />
+            <DetailView {...props} service="projections" />
           )} />
           <Route exact path="/projeksjoner/" render={(props) => (
-            <TableView {...props} service="projeksjoner" title="Projeksjoner" />
+            <TableView {...props} service="projections" title="Projeksjoner" />
           )} />
           <Route exact path="/formater/:id([0-9a-z\-]+)/" render={(props) => (
-            <DetailView {...props} service="formater" />
+            <DetailView {...props} service="formats" />
           )} />
           <Route exact path="/formater/" render={(props) => (
-            <TableView {...props} service="formater" title="Formater" />
+            <TableView {...props} service="formats" title="Formater" />
           )} />
         </div>
       </Router>
