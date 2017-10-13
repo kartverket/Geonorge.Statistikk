@@ -1,6 +1,5 @@
-import * as Constants from '../Constants'
-
 import React, { Component } from 'react'
+import * as Constants from '../Constants'
 
 import qs from 'query-string'
 import { NavLink } from 'react-router-dom'
