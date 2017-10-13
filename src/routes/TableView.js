@@ -1,6 +1,7 @@
 import Base from './Base'
 import * as Constants from '../Constants'
 
+import moment from 'moment'
 import PropTypes from 'prop-types'
 import qs from 'query-string'
 import React from 'react'
@@ -28,7 +29,9 @@ class TableView extends Base {
       duration: duration,
     })
     const { response } = this.state
-    const { results = [], total = 0 } = response
+    const { gte = '', lte = '', results = [], total = 0 } = response
+    const gteFormatted = moment(gte, Constants.DATE_INPUT).format(Constants.DATE_OUTPUT)
+    const lteFormatted = moment(lte, Constants.DATE_INPUT).format(Constants.DATE_OUTPUT)
     const rows = results.map( ({ id, name, downloads }) => (
       <tr key={id}>
         <td>
@@ -46,7 +49,25 @@ class TableView extends Base {
       <div className="container">
         <Heading title={title} />
         <div className="btn-toolbar justify-content-between my-3" role="toolbar">
-          <div />
+          <div className="p-1">
+            <ul className="list-inline mb-0">
+              <li className="list-inline-item">
+                <span className="text-muted small">Totalt:</span>
+                &nbsp;
+                <span>{total}</span>
+              </li>
+               <li className="list-inline-item">
+                <span className="text-muted small">Fra:</span>
+                &nbsp;
+                <time dateTime={gte}>{gteFormatted}</time>
+              </li>
+               <li className="list-inline-item">
+                <span className="text-muted small">Til:</span>
+                &nbsp;
+               <time dateTime={lte}>{lteFormatted}</time>
+              </li>
+            </ul>
+          </div>
           <Route component={Durations} path="/" />
         </div>
         <table className="table table-responsive table-sm">
