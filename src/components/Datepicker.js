@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import * as Constants from '../Constants'
+
 import moment from 'moment'
+import PropTypes from 'prop-types'
 
 import '../assets/css/datepicker.css'
-
-const DATE_FORMAT = 'YYYY-MM-DD'
 
 class Datepicker extends Component {
   render () {
@@ -17,21 +17,21 @@ class Datepicker extends Component {
     for (let i = 2016, j = moment().year(); i <= j; i++) {
       years.push(i)
     }
-    const months = moment.monthsShort()
+    const months = moment.months()
     const days = []
-    for (let i = 1, j = moment(datetime, DATE_FORMAT).daysInMonth(); i <= j; i++) {
+    for (let i = 1, j = moment(datetime, Constants.DATE_DEFAULT).daysInMonth(); i <= j; i++) {
       days.push(i)
     }
     
     return (
-      <date className="datepicker" dateTime={datetime}>
-        <select name="day" onChange={this.changeHandler.bind(this)} value={day}>
+      <date className="input-group input-group-sm datepicker" dateTime={datetime}>
+        <select className="form-control" name="day" onChange={this.changeHandler.bind(this)} value={day}>
           { days.map( day => (<option key={day} value={day}>{day}</option>) )}
         </select>
-        <select name="month" onChange={this.changeHandler.bind(this)} value={month}>
+        <select className="form-control" name="month" onChange={this.changeHandler.bind(this)} value={month}>
           { months.map( ( name, index ) => (<option key={index} value={index + 1}>{name}</option>) )}
         </select>
-        <select name="year" onChange={this.changeHandler.bind(this)} value={year}>
+        <select className="form-control" name="year" onChange={this.changeHandler.bind(this)} value={year}>
           { years.map( year => (<option key={year} value={year}>{year}</option>) )}
         </select>
       </date>
