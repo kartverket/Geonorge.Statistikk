@@ -1,12 +1,12 @@
 import Stats from './Stats'
 import * as Constants from '../Constants'
 
-import moment from 'moment'
 import qs from 'query-string'
 import React from 'react'
 import { Link/*, Route*/ } from 'react-router-dom'
 
 import Heading from '../components/Heading'
+import StatusBar from '../components/StatusBar'
 
 class StatsList extends Stats {
   state = {
@@ -25,8 +25,6 @@ class StatsList extends Stats {
     const { duration = Constants.DEFAULT_DURATION } = search
     const { response } = this.state
     const { gte = '', lte = '', name = '', results = [], total = 0 } = response
-    const gteFormatted = moment(gte, Constants.DATE_INPUT).format(Constants.DATE_OUTPUT)
-    const lteFormatted = moment(lte, Constants.DATE_INPUT).format(Constants.DATE_OUTPUT)
     const rows = results.map( ({ count, id, name }) => (
       <tr key={id}>
         <td>
@@ -42,23 +40,7 @@ class StatsList extends Stats {
         <Heading title={name} />
         <div className="btn-toolbar justify-content-between my-3" role="toolbar">
           <div className="p-1">
-            <ul className="list-inline mb-0">
-              <li className="list-inline-item">
-                <span className="text-muted small">Totalt:</span>
-                &nbsp;
-                <span>{total.toLocaleString()}</span>
-              </li>
-               <li className="list-inline-item">
-                <span className="text-muted small">Fra:</span>
-                &nbsp;
-                <time dateTime={gte}>{gteFormatted}</time>
-              </li>
-               <li className="list-inline-item">
-                <span className="text-muted small">Til:</span>
-                &nbsp;
-               <time dateTime={lte}>{lteFormatted}</time>
-              </li>
-            </ul>
+            <StatusBar gte={gte} lte={lte} total={total} />
           </div>
         </div>
         <table className="table table-responsive table-sm">
