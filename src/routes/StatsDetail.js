@@ -1,7 +1,5 @@
 import Stats from './Stats'
-import * as Constants from '../Constants'
 
-import moment from 'moment'
 import React from 'react'
 import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
