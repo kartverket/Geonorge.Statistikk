@@ -1,4 +1,4 @@
-import Base from './Base'
+import Stats from './Stats'
 import * as Constants from '../Constants'
 
 import React from 'react'
@@ -6,7 +6,7 @@ import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recha
 
 import Heading from '../components/Heading'
 
-class Home extends Base {
+class Home extends Stats {
   state = {
     dataYear: {},
     pending: false,
