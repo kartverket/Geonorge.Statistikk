@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import BackButton from './routes/BackButton'
 import DateRange from './routes/DateRange'
 import Home from './routes/Home'
 import StatsDetail from './routes/StatsDetail'
@@ -21,7 +20,6 @@ class App extends Component {
           <Route component={Navigation} path="/" />
           <div className="container mt-3">
             <div className="btn-toolbar justify-content-between" role="toolbar">
-              <Route component={BackButton} path="/" />
               <Route component={DateRange} path="/" />
             </div>
           </div>

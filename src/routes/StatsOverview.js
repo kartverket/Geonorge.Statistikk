@@ -5,6 +5,7 @@ import qs from 'query-string'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import Breadcrumbs from '../components/Breadcrumbs'
 import Heading from '../components/Heading'
 import StatusBar from '../components/StatusBar'
 
@@ -23,9 +24,10 @@ class StatsOverview extends Stats {
     const { pathname = '/' } = location
     const { duration = Constants.DEFAULT_DURATION } = qs.parse(location.search)
     const { response } = this.state
-    const { gte = '', lte = '', name = '', results = [], total = 0 } = response
+    const { gte = '', lte = '', name = '-', paths = [], results = [], total = 0 } = response
     return (
       <div className="container">
+        <Breadcrumbs paths={paths} />
         <Heading title={name} />
         <div className="btn-toolbar justify-content-between my-3" role="toolbar">
           <div className="p-1">

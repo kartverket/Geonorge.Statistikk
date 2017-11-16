@@ -4,6 +4,7 @@ import * as Constants from '../Constants'
 import React from 'react'
 import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
+import Breadcrumbs from '../components/Breadcrumbs'
 import Heading from '../components/Heading'
 
 class Home extends Stats {
@@ -21,6 +22,7 @@ class Home extends Stats {
     const { results = [], total = 0 } = dataYear
     return (
       <div className="container">
+        <Breadcrumbs />
         <Heading title="Statistikk" />
         <div className="row">
           <div className="col-sm-6">

@@ -1,0 +1,9 @@
+.breadcrumb {
+  background-color: transparent;
+  padding: 0;
+}
+.breadcrumb-item + .breadcrumb-item:before {
+  content: "\25BA";
+  color: #414042;
+  font-size: 80%;
+}
