@@ -12,7 +12,7 @@ class Navigation extends Component {
     const { duration = Constants.DEFAULT_DURATION } = qs.parse(location.search)
     const search = `?duration=${duration}`
     return (
-      <nav className="navigation">
+      <nav className="navigation mb-3">
         <div className="container">
           <NavLink activeClassName="active" className="navigation-item" exact to="/">Hjem</NavLink>
           <NavLink activeClassName="active" className="navigation-item" to={{ pathname: '/nedlastinger/', search: search }}>Nedlastinger</NavLink>
