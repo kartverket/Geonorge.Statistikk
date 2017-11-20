@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import * as Constants from '../Constants'
 
-import qs from 'query-string'
-import { NavLink } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 class Durations extends Component {
   state = {
@@ -30,19 +29,24 @@ class Durations extends Component {
     }],
   }
   render () {
-    const { location = {} } = this.props
-    const { pathname = '/', search = '' } = location
     const { durations } = this.state
-    const params = qs.parse(search)
-    const { duration : selected = Constants.DEFAULT_DURATION } = params
+    const { duration, pathname } = this.props
     return (
       <div aria-label="Durations" className="btn-group btn-group-sm" role="group">
-        {durations.map( duration => (
-          <NavLink className={duration.key === selected ? 'btn btn-primary' : 'btn btn-secondary'} key={duration.key} to={{ pathname: pathname, search: `duration=${duration.key}` }}>{duration.val}</NavLink>
+        {durations.map( ({key, val}) => (
+          <Link className={key === duration ? 'btn btn-primary' : 'btn btn-secondary'} key={key} to={{
+            pathname: pathname,
+            search: `duration=${key}`,
+          }}>{val}</Link>
         ), this)}
       </div>
     )
   }
+}
+
+Durations.propTypes = {
+  duration: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired,
 }
 
 export default Durations

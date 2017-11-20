@@ -6,6 +6,7 @@ import React from 'react'
 import { Link/*, Route*/ } from 'react-router-dom'
 
 import Breadcrumbs from '../components/Breadcrumbs'
+import Durations from '../components/Durations'
 import Heading from '../components/Heading'
 import StatusBar from '../components/StatusBar'
 
@@ -21,6 +22,7 @@ class StatsList extends Stats {
   }
   render () {
     const { location = {}, match = {} } = this.props
+    const { pathname = '/' } = location
     const { url = '/' } = match
     const search = qs.parse(location.search)
     const { duration = Constants.DEFAULT_DURATION } = search
@@ -39,6 +41,7 @@ class StatsList extends Stats {
     return (
       <div className="container">
         <Breadcrumbs paths={paths} />
+        <Durations duration={duration} pathname={pathname} />
         <Heading title={name} />
         <div className="btn-toolbar justify-content-between my-3" role="toolbar">
           <div className="p-1">

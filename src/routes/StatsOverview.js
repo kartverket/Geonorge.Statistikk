@@ -6,6 +6,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import Breadcrumbs from '../components/Breadcrumbs'
+import Durations from '../components/Durations'
 import Heading from '../components/Heading'
 import StatusBar from '../components/StatusBar'
 
@@ -28,6 +29,7 @@ class StatsOverview extends Stats {
     return (
       <div className="container">
         <Breadcrumbs paths={paths} />
+        <Durations duration={duration} pathname={pathname} />
         <Heading title={name} />
         <div className="btn-toolbar justify-content-between my-3" role="toolbar">
           <div className="p-1">

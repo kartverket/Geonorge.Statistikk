@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import DateRange from './routes/DateRange'
 import Home from './routes/Home'
 import StatsDetail from './routes/StatsDetail'
 import StatsList from './routes/StatsList'
@@ -18,11 +17,6 @@ class App extends Component {
         <div>
           <Header />
           <Route component={Navigation} path="/" />
-          <div className="container mt-3">
-            <div className="btn-toolbar justify-content-between" role="toolbar">
-              <Route component={DateRange} path="/" />
-            </div>
-          </div>
           <Route component={Home} exact path="/" />
           <Route component={StatsDetail} exact path="/:_basename/:_category/:_key/" />
           <Route component={StatsList} exact path="/:_basename/:_category/" />
