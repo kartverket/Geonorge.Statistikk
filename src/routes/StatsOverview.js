@@ -25,7 +25,8 @@ class StatsOverview extends Stats {
     const { pathname = '/' } = location
     const { duration = Constants.DEFAULT_DURATION } = qs.parse(location.search)
     const { response } = this.state
-    const { gte = '', lte = '', name = '-', paths = [], results = [], total = 0 } = response
+    const { description = '', gte = '', lte = '', name = '-', paths = [], results = [], total = 0 } = response
+    const lines = description.length === 0 ? [] : description.split('\n')
     return (
       <div className="container">
         <Breadcrumbs paths={paths} />
@@ -38,8 +39,9 @@ class StatsOverview extends Stats {
         </div>
         <div className="row">
           <div className="col-sm-4">
-            <p className="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            {lines.map( (line, index) => (
+              <p className={index === 0 ? 'lead' : null} key={`line-${index}`}>{line}</p>
+            ) )}
             <p>Totalt: <b>{total.toLocaleString()}</b>.</p>
           </div>
           <div className="col-sm-8">
