@@ -8,14 +8,11 @@ import '../assets/css/breadcrumbs.css'
 class Breadcrumbs extends Component {
 
   render () {
-    const { paths } = this.props
+    const { duration, paths } = this.props
     const lastIndex = paths.length - 1
     return (
       <nav>
         <ul className="breadcrumb">
-          <li className="breadcrumb-item">
-            <a href="https://www.geonorge.no/">Geonorge</a>
-          </li>
           <li className="breadcrumb-item">
             {lastIndex === -1 ? (
               <span>Hjem</span>
@@ -28,7 +25,10 @@ class Breadcrumbs extends Component {
               {index === lastIndex ? (
                 <span>{name}</span>
               ) : (
-                <Link to={path}>{name}</Link>
+                <Link to={{
+                  pathname: path,
+                  search: `duration=${duration}`,
+                }}>{name}</Link>
               )}
             </li>
           ) )}
@@ -39,6 +39,7 @@ class Breadcrumbs extends Component {
 }
 
 Breadcrumbs.propTypes = {
+  duration: PropTypes.string.isRequired,
   paths: PropTypes.array,
 }
 

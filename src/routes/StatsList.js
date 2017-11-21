@@ -40,7 +40,7 @@ class StatsList extends Stats {
     ), this )
     return (
       <div className="container">
-        <Breadcrumbs paths={paths} />
+        <Breadcrumbs duration={duration} paths={paths} />
         <Heading title={name} />
         <div className="btn-toolbar justify-content-between my-3" role="toolbar">
           <StatusBar gte={gte} lte={lte} total={total} />
