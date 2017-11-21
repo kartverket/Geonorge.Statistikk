@@ -30,12 +30,10 @@ class StatsDetail extends Stats {
     return (
       <div className="container">
         <Breadcrumbs paths={paths} />
-        <Durations duration={duration} pathname={pathname} />
         <Heading title={name} />
         <div className="btn-toolbar justify-content-between my-3" role="toolbar">
-          <div className="p-1">
-            <StatusBar gte={gte} lte={lte} total={total} />
-          </div>
+          <StatusBar gte={gte} lte={lte} total={total} />
+          <Durations duration={duration} pathname={pathname} />
         </div>
         <ResponsiveContainer aspect={1.77} width="100%">
           <BarChart data={results}>

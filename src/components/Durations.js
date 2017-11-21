@@ -32,9 +32,9 @@ class Durations extends Component {
     const { durations } = this.state
     const { duration, pathname } = this.props
     return (
-      <div aria-label="Durations" className="btn-group btn-group-sm" role="group">
+      <div className="mb-1">
         {durations.map( ({key, val}) => (
-          <Link className={key === duration ? 'btn btn-primary' : 'btn btn-secondary'} key={key} to={{
+          <Link className={`badge badge-${key === duration ? 'primary' : 'light'} rounded-0`} key={key} to={{
             pathname: pathname,
             search: `duration=${key}`,
           }}>{val}</Link>
