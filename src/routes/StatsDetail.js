@@ -9,7 +9,7 @@ import Breadcrumbs from '../components/Breadcrumbs'
 import Durations from '../components/Durations'
 import Heading from '../components/Heading'
 import StatusBar from '../components/StatusBar'
-import Tick from '../components/Tick'
+import TickDetailX from '../components/TickDetailX'
 
 class StatsDetail extends Stats {
   state = {
@@ -47,7 +47,7 @@ class StatsDetail extends Stats {
           <BarChart data={results}>
             <Tooltip />
             <Bar dataKey="count" fill="#fe5000" maxBarSize={20} />
-            <XAxis dataKey="date" interval={0} padding={{ left: 10, right: 10 }} tick={<Tick includes={includes} type={type} />} />
+            <XAxis dataKey="date" interval={0} padding={{ left: 10, right: 10 }} tick={<TickDetailX includes={includes} type={type} />} />
             <YAxis />
           </BarChart>
         </ResponsiveContainer>
