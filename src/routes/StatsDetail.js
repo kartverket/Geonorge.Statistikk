@@ -9,6 +9,7 @@ import Breadcrumbs from '../components/Breadcrumbs'
 import Durations from '../components/Durations'
 import Heading from '../components/Heading'
 import StatusBar from '../components/StatusBar'
+import Tick from '../components/Tick'
 
 class StatsDetail extends Stats {
   state = {
@@ -27,6 +28,13 @@ class StatsDetail extends Stats {
     const { duration = Constants.DEFAULT_DURATION } = search
     const { response } = this.state
     const { gte = '', lte = '', name = '-', paths = [], results = [], total = 0 } = response
+    const type = duration.replace(/[0-9]/g, '')
+    const count = results.length
+    const step = Math.ceil(count / 10)
+    const includes = []
+    for (let i = count - 1; i >= 0; i -= step) {
+      includes.push(i)
+    }
     return (
       <div className="container">
         <Breadcrumbs duration={duration} paths={paths} />
@@ -35,11 +43,11 @@ class StatsDetail extends Stats {
           <StatusBar gte={gte} lte={lte} total={total} />
           <Durations duration={duration} pathname={pathname} />
         </div>
-        <ResponsiveContainer aspect={1.77} width="100%">
+        <ResponsiveContainer aspect={2.39} width="100%">
           <BarChart data={results}>
             <Tooltip />
             <Bar dataKey="count" fill="#fe5000" maxBarSize={20} />
-            <XAxis dataKey="label" />
+            <XAxis dataKey="date" interval={0} padding={{ left: 10, right: 10 }} tick={<Tick includes={includes} type={type} />} />
             <YAxis />
           </BarChart>
         </ResponsiveContainer>
