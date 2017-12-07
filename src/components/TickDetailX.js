@@ -15,7 +15,7 @@ const LOWER_FORMAT = {
   'Y': '[-]',
 }
 
-class Tick extends Component {
+class TickDetailX extends Component {
   render () {
     const {includes, index, payload, type, x, y} = this.props
     if (includes.indexOf(index) === -1) {
@@ -34,4 +34,4 @@ class Tick extends Component {
   }
 }
 
-export default Tick
+export default TickDetailX
