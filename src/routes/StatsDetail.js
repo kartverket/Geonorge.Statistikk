@@ -10,6 +10,7 @@ import Durations from '../components/Durations'
 import Heading from '../components/Heading'
 import StatusBar from '../components/StatusBar'
 import TickDetailX from '../components/TickDetailX'
+import TooltipDetail from '../components/TooltipDetail'
 
 class StatsDetail extends Stats {
   state = {
@@ -44,8 +45,8 @@ class StatsDetail extends Stats {
           <Durations duration={duration} pathname={pathname} />
         </div>
         <ResponsiveContainer aspect={2.39} width="100%">
-          <BarChart data={results}>
-            <Tooltip />
+          <BarChart data={results} margin={{ bottom: 5, top: 20 }}>
+            <Tooltip content={<TooltipDetail type={type} />} isAnimationActive={false} offset={0} position={{ x: 0, y: 0 }} />
             <Bar dataKey="count" fill="#fe5000" maxBarSize={20} />
             <XAxis dataKey="date" interval={0} padding={{ left: 10, right: 10 }} tick={<TickDetailX includes={includes} type={type} />} />
             <YAxis />
