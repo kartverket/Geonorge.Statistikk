@@ -46,21 +46,23 @@ class StatsList extends Stats {
           <StatusBar gte={gte} lte={lte} total={total} />
           <Durations duration={duration} pathname={pathname} />
         </div>
-        <table className="table table-responsive table-sm">
-          <thead className="thead-default">
-            <tr>
-              <th>Navn</th>
-              <th className="text-right">Nedlastinger</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-          <tfoot>
-            <tr className="table-active">
-              <td>Totalt</td>
-              <td className="text-right">{total.toLocaleString()}</td>
-            </tr>
-          </tfoot>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-sm">
+            <thead className="thead-default">
+              <tr>
+                <th>Navn</th>
+                <th className="text-right">Nedlastinger</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+            <tfoot>
+              <tr className="table-active">
+                <td>Totalt</td>
+                <td className="text-right">{total.toLocaleString()}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
     )
   }
