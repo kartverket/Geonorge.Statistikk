@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import * as Constants from '../Constants'
 
 import moment from 'moment'
 
@@ -22,7 +23,7 @@ class TickDetailX extends Component {
       return null
     }
     const { value } = payload
-    const datetime = moment(value, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]', true)
+    const datetime = moment(value, Constants.DATE_INPUT, true)
     const upperValue = type in UPPER_FORMAT ? datetime.format(UPPER_FORMAT[type]) : '-'
     const lowerValue = type in LOWER_FORMAT ? datetime.format(LOWER_FORMAT[type]) : '-'
     return (

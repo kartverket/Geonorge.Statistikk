@@ -39,11 +39,12 @@ class Breadcrumbs extends Component {
 }
 
 Breadcrumbs.propTypes = {
-  duration: PropTypes.string.isRequired,
+  duration: PropTypes.string,
   paths: PropTypes.array,
 }
 
 Breadcrumbs.defaultProps = {
+  duration: '',
   paths: [],
 }
 

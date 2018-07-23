@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import * as Constants from '../Constants'
 
 import moment from 'moment'
 import PropTypes from 'prop-types'
@@ -15,7 +16,7 @@ const FORMAT = {
 class TooltipDetail extends Component {
   render () {
     const { label, payload:payloads = [], type } = this.props
-    const dateObj = moment(label, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]', true)
+    const dateObj = moment(label, Constants.DATE_INPUT, true)
     const dateStr = type in FORMAT ? dateObj.format(FORMAT[type]) : '-'
     const [ payload = {} ] = payloads
     const { value = 0 } = payload

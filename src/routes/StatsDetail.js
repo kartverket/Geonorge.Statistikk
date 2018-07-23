@@ -29,7 +29,7 @@ class StatsDetail extends Stats {
     const { duration = Constants.DEFAULT_DURATION } = search
     const { response } = this.state
     const { gte = '', lte = '', name = '-', paths = [], results = [], total = 0 } = response
-    const type = duration.replace(/[0-9]/g, '')
+    const type = duration.substr(-1)
     const count = results.length
     const step = Math.ceil(count / 10)
     const includes = []

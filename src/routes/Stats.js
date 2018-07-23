@@ -42,7 +42,7 @@ class Stats extends Component {
     const { _basename = '', _category = '', _key = '' } = params
     const { duration = Constants.DEFAULT_DURATION } = qs.parse(location.search)
     let parts = []
-    parts.push(Constants.API_URL_ALT)
+    parts.push(Constants.API_URL)
     if (_basename.length > 0) parts.push(_basename)
     if (_category.length > 0) parts.push(_category)
     if (_key.length > 0) parts.push(_key)

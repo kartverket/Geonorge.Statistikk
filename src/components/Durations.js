@@ -6,25 +6,25 @@ import { Link } from 'react-router-dom'
 class Durations extends Component {
   state = {
     durations: [{
-      key: '24H',
+      key: 'PT24H',
       val: '1 dag',
     },{
-      key: '48H',
+      key: 'PT48H',
       val: '2 dager',
     },{
-      key: '7D',
+      key: 'P7D',
       val: '1 uke',
     },{
-      key: '14D',
+      key: 'P14D',
       val: '2 uker',
     },{
-      key: '30D',
+      key: 'P30D',
       val: '1 måned',
     },{
-      key: '6M',
+      key: 'P6M',
       val: '6 måneder',
     },{
-      key: '12M',
+      key: 'P12M',
       val: '1 år',
     }],
   }
