@@ -1,43 +1,30 @@
 import React, { Component } from 'react'
+import { DATE_DEFAULT } from '../Constants'
 
+import moment from 'moment'
 import PropTypes from 'prop-types'
 
 class Durations extends Component {
-  state = {
-    durations: [{
-      end: '2018-07-24',
-      key: 'today',
-      label: 'I dag',
-      start: '2018-07-24',
-    },{
-      end: '2018-07-23',
-      key: 'yesterday',
-      label: 'I går',
-      start: '2018-07-23',
-    },{
-      end: '2018-07-24',
-      key: 'lastseven',
-      label: 'Siste 7 dager',
-      start: '2018-07-17',
-    },{
-      end: '2018-07-24',
-      key: 'lastthirty',
-      label: 'Siste 30 dager',
-      start: '2018-06-24',
-    },{
-      end: '2018-07-31',
-      key: 'thismonth',
-      label: 'Denne måned',
-      start: '2018-07-01',
-    },{
-      end: '2018-06-30',
-      key: 'lastmonth',
-      label: 'Forrige måned',
-      start: '2018-06-01',
-    }],
-    expanded: false,
+  constructor () {
+    super()
+    const dayAlpha = moment()
+    const dayOmega = moment().subtract(1, 'day')
+    const monthAlpha = moment().date(1)
+    const monthOmega = moment().date(monthAlpha.daysInMonth())
+    const durations = [
+      this.getDuration('today', 'I dag', dayAlpha, dayAlpha),
+      this.getDuration('yesterday', 'I går', dayOmega, dayOmega),
+      this.getDuration('days_seven', 'Siste 7 dager', dayOmega.subtract(6, 'days'), dayAlpha),
+      this.getDuration('days_thirty', 'Siste 30 dager', dayOmega.subtract(23, 'days'), dayAlpha),
+      this.getDuration('month_this', 'Denne måned', monthAlpha, monthOmega),
+      this.getDuration('month_last', 'Forrige måned', monthAlpha.subtract(1, 'month'), monthOmega.subtract(1, 'month')),
+    ]
+    this.state = {
+      durations: durations,
+      expanded: false,
+    }
   }
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps () {
     const { expanded } = this.state
     if (expanded) {
       this.setState({
@@ -52,7 +39,7 @@ class Durations extends Component {
     const label = selectedIndex === -1 ? 'Egendefinert' : durations[selectedIndex].label
     return (
       <div className={expanded ? 'dropdown show' : 'dropdown'}>
-        <button aria-expanded={expanded} className="btn btn-sm btn-light dropdown-toggle" onClick={this.handleToggle.bind(this)} type="button">{label}</button>
+        <button aria-expanded={expanded} className="btn btn-sm btn-outline-secondary dropdown-toggle" onClick={this.handleToggle.bind(this)} type="button">{label}</button>
         <div className={expanded ? 'dropdown-menu dropdown-menu-right show' : 'dropdown-menu dropdown-menu-right'}>
           {durations.map((duration, index) => (
             <button className={index === selectedIndex ? 'dropdown-item active' : 'dropdown-item'} key={duration.key} onClick={this.handleUpdate.bind(this, index)} type="button">{duration.label}</button>
@@ -60,6 +47,14 @@ class Durations extends Component {
         </div>
       </div>
     )
+  }
+  getDuration (key, label, start, end) {
+    return {
+      end: end.format(DATE_DEFAULT),
+      key: key,
+      label: label,
+      start: start.format(DATE_DEFAULT),
+    }
   }
   handleToggle () {
     const { expanded } = this.state
