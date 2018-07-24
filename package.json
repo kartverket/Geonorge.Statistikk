@@ -7,6 +7,7 @@
     "prop-types": "^15.6.1",
     "query-string": "6.0.x",
     "react": "16.3.x",
+    "react-datepicker": "^1.5.0",
     "react-dom": "16.3.x",
     "react-router-dom": "4.2.x",
     "recharts": "1.0.0-beta.10"

@@ -1,14 +1,12 @@
 import Stats from './Stats'
-import * as Constants from '../Constants'
-
-import qs from 'query-string'
 import React from 'react'
+
 import { NavLink } from 'react-router-dom'
 
 import Breadcrumbs from '../components/Breadcrumbs'
+import Daterange from '../components/Daterange'
 import Durations from '../components/Durations'
 import Heading from '../components/Heading'
-import StatusBar from '../components/StatusBar'
 
 class StatsOverview extends Stats {
   state = {
@@ -21,19 +19,18 @@ class StatsOverview extends Stats {
     }, this.dataLoad)
   }
   render () {
-    const { location = {} } = this.props
+    const { end, location = {}, start } = this.props
     const { pathname = '/' } = location
-    const { duration = Constants.DEFAULT_DURATION } = qs.parse(location.search)
     const { response } = this.state
-    const { description = '', gte = '', lte = '', name = '-', paths = [], results = [], total = 0 } = response
+    const { description = '', name = '-', paths = [], results = [], total = 0 } = response
     const lines = description.length === 0 ? [] : description.split('\n')
     return (
       <div className="container">
-        <Breadcrumbs duration={duration} paths={paths} />
+        <Breadcrumbs paths={paths} />
         <Heading title={name} />
-        <div className="btn-toolbar justify-content-between my-3" role="toolbar">
-          <StatusBar gte={gte} lte={lte} total={total} />
-          <Durations duration={duration} pathname={pathname} />
+        <div className="navbar navbar-expand navbar-light bg-light justify-content-between mb-3">
+          <Daterange end={end} start={start} updateDates={this.props.updateDates} />
+          <Durations end={end} start={start} updateDates={this.props.updateDates} />
         </div>
         <div className="row">
           <div className="col-sm-4">
@@ -50,10 +47,7 @@ class StatsOverview extends Stats {
                 if (a.count > b.count) order = -1
                 return order
               } ).map( (item, index) => (
-                <NavLink className="list-group-item list-group-item-action flex-column align-items-start" key={item.id} to={{
-                    pathname: `${pathname}${item.id}/`,
-                    search: `?duration=${duration}`,
-                  }}>
+                <NavLink className="list-group-item list-group-item-action flex-column align-items-start" key={item.id} to={`${pathname}${item.id}/`}>
                   <div className="d-flex w-100 justify-content-between">
                     <span>{item.name}</span>
                     <span>{item.count.toLocaleString()}</span>

@@ -8,7 +8,7 @@ import '../assets/css/breadcrumbs.css'
 class Breadcrumbs extends Component {
 
   render () {
-    const { duration, paths } = this.props
+    const { paths } = this.props
     const lastIndex = paths.length - 1
     return (
       <nav>
@@ -25,10 +25,7 @@ class Breadcrumbs extends Component {
               {index === lastIndex ? (
                 <span>{name}</span>
               ) : (
-                <Link to={{
-                  pathname: path,
-                  search: `duration=${duration}`,
-                }}>{name}</Link>
+                <Link to={path}>{name}</Link>
               )}
             </li>
           ) )}
@@ -39,12 +36,10 @@ class Breadcrumbs extends Component {
 }
 
 Breadcrumbs.propTypes = {
-  duration: PropTypes.string,
   paths: PropTypes.array,
 }
 
 Breadcrumbs.defaultProps = {
-  duration: '',
   paths: [],
 }
 

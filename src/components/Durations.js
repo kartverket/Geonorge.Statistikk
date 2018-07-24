@@ -1,52 +1,82 @@
 import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 
 class Durations extends Component {
   state = {
     durations: [{
-      key: 'PT24H',
-      val: '1 dag',
+      end: '2018-07-24',
+      key: 'today',
+      label: 'I dag',
+      start: '2018-07-24',
     },{
-      key: 'PT48H',
-      val: '2 dager',
+      end: '2018-07-23',
+      key: 'yesterday',
+      label: 'I går',
+      start: '2018-07-23',
     },{
-      key: 'P7D',
-      val: '1 uke',
+      end: '2018-07-24',
+      key: 'lastseven',
+      label: 'Siste 7 dager',
+      start: '2018-07-17',
     },{
-      key: 'P14D',
-      val: '2 uker',
+      end: '2018-07-24',
+      key: 'lastthirty',
+      label: 'Siste 30 dager',
+      start: '2018-06-24',
     },{
-      key: 'P30D',
-      val: '1 måned',
+      end: '2018-07-31',
+      key: 'thismonth',
+      label: 'Denne måned',
+      start: '2018-07-01',
     },{
-      key: 'P6M',
-      val: '6 måneder',
-    },{
-      key: 'P12M',
-      val: '1 år',
+      end: '2018-06-30',
+      key: 'lastmonth',
+      label: 'Forrige måned',
+      start: '2018-06-01',
     }],
+    expanded: false,
+  }
+  componentWillReceiveProps (nextProps) {
+    const { expanded } = this.state
+    if (expanded) {
+      this.setState({
+        expanded: false,
+      })
+    }
   }
   render () {
-    const { durations } = this.state
-    const { duration, pathname } = this.props
+    const { end, start } = this.props
+    const { durations, expanded } = this.state
+    const selectedIndex = durations.findIndex(duration => (duration.start === start && duration.end === end))
+    const label = selectedIndex === -1 ? 'Egendefinert' : durations[selectedIndex].label
     return (
-      <div className="mb-1">
-        {durations.map( ({key, val}) => (
-          <Link className={`badge badge-${key === duration ? 'primary' : 'light'} rounded-0`} key={key} to={{
-            pathname: pathname,
-            search: `duration=${key}`,
-          }}>{val}</Link>
-        ), this)}
+      <div className={expanded ? 'dropdown show' : 'dropdown'}>
+        <button aria-expanded={expanded} className="btn btn-sm btn-light dropdown-toggle" onClick={this.handleToggle.bind(this)} type="button">{label}</button>
+        <div className={expanded ? 'dropdown-menu dropdown-menu-right show' : 'dropdown-menu dropdown-menu-right'}>
+          {durations.map((duration, index) => (
+            <button className={index === selectedIndex ? 'dropdown-item active' : 'dropdown-item'} key={duration.key} onClick={this.handleUpdate.bind(this, index)} type="button">{duration.label}</button>
+          ), this)}
+        </div>
       </div>
     )
+  }
+  handleToggle () {
+    const { expanded } = this.state
+    this.setState({
+      expanded: !expanded,
+    })
+  }
+  handleUpdate (index) {
+    const { durations } = this.state
+    this.props.updateDates(durations[index].start, durations[index].end)
   }
 }
 
 Durations.propTypes = {
-  duration: PropTypes.string.isRequired,
-  pathname: PropTypes.string.isRequired,
+  end: PropTypes.string.isRequired,
+  start: PropTypes.string.isRequired,
+  updateDates: PropTypes.func.isRequired,
 }
 
 export default Durations

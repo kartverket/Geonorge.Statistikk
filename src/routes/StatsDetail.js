@@ -1,14 +1,12 @@
 import Stats from './Stats'
-import * as Constants from '../Constants'
-
-import qs from 'query-string'
 import React from 'react'
+
 import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import Breadcrumbs from '../components/Breadcrumbs'
+import Daterange from '../components/Daterange'
 import Durations from '../components/Durations'
 import Heading from '../components/Heading'
-import StatusBar from '../components/StatusBar'
 import TickDetailX from '../components/TickDetailX'
 import TooltipDetail from '../components/TooltipDetail'
 
@@ -23,13 +21,10 @@ class StatsDetail extends Stats {
     }, this.dataLoad)
   }
   render () {
-    const { location = {} } = this.props
-    const { pathname = '/' } = location
-    const search = qs.parse(location.search)
-    const { duration = Constants.DEFAULT_DURATION } = search
+    const { end, start } = this.props
     const { response } = this.state
-    const { gte = '', lte = '', name = '-', paths = [], results = [], total = 0 } = response
-    const type = duration.substr(-1)
+    const { name = '-', paths = [], results = [], total = 0 } = response
+    const type = 'D'
     const count = results.length
     const step = Math.ceil(count / 10)
     const includes = []
@@ -38,11 +33,11 @@ class StatsDetail extends Stats {
     }
     return (
       <div className="container">
-        <Breadcrumbs duration={duration} paths={paths} />
+        <Breadcrumbs paths={paths} />
         <Heading title={name} />
-        <div className="btn-toolbar justify-content-between my-3" role="toolbar">
-          <StatusBar gte={gte} lte={lte} total={total} />
-          <Durations duration={duration} pathname={pathname} />
+        <div className="navbar navbar-expand navbar-light bg-light justify-content-between mb-3">
+          <Daterange end={end} start={start} updateDates={this.props.updateDates} />
+          <Durations end={end} start={start} updateDates={this.props.updateDates} />
         </div>
         <ResponsiveContainer aspect={2.39} width="100%">
           <BarChart data={results} margin={{ bottom: 5, top: 20 }}>
@@ -52,6 +47,7 @@ class StatsDetail extends Stats {
             <YAxis />
           </BarChart>
         </ResponsiveContainer>
+        <div className="text-right py-2 mt-3"><small>Totalt:</small> {total.toLocaleString()}</div>
       </div>
     )
   }

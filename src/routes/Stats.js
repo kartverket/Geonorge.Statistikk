@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import * as Constants from '../Constants'
+import {API_URL} from '../Constants'
 
-import qs from 'query-string'
+import PropTypes from 'prop-types'
 
 class Stats extends Component {
   state = {
@@ -18,14 +18,12 @@ class Stats extends Component {
       document.getElementById('modal-backdrop').classList.add('d-none')
     }
   }
-  componentWillReceiveProps(nextProps) {
-    const { location:prevLocation = {}, match:prevMatch = {} } = this.props
-    const { duration:prevDuration = '' } = qs.parse(prevLocation.search)
+  componentWillReceiveProps (nextProps) {
+    const { match:prevMatch = {}, start:prevStart, end:prevEnd } = this.props
     const { url:prevUrl = '/' } = prevMatch
-    const { location:nextLocation = {}, match:nextMatch = {} } = nextProps
-    const { duration:nextDuration = '' } = qs.parse(nextLocation.search)
+    const { match:nextMatch = {}, start:nextStart, end:nextEnd } = nextProps
     const { url:nextUrl = '/' } = nextMatch
-    if (prevUrl !== nextUrl || prevDuration !== nextDuration) {
+    if (prevUrl !== nextUrl || prevStart !== nextStart || prevEnd !== nextEnd) {
       this.setState({
         pending: true,
       }, this.dataLoad)
@@ -37,16 +35,15 @@ class Stats extends Component {
     )
   }
   dataLoad () {
-    const { location = {}, match = {} } = this.props
+    const { start, end, match = {} } = this.props
     const { params = {} } = match
     const { _basename = '', _category = '', _key = '' } = params
-    const { duration = Constants.DEFAULT_DURATION } = qs.parse(location.search)
-    let parts = []
-    parts.push(Constants.API_URL)
+    const parts = []
+    parts.push(API_URL)
     if (_basename.length > 0) parts.push(_basename)
     if (_category.length > 0) parts.push(_category)
     if (_key.length > 0) parts.push(_key)
-    parts.push(`?duration=${duration}`)
+    parts.push(`?start=${start}&end=${end}`)
     const url = parts.join('/')
     fetch(url).then(this.toJSON).then( response => {
       this.setState({
@@ -61,6 +58,12 @@ class Stats extends Component {
     })
   }
   toJSON = response => response.json()
+}
+
+Stats.propTypes = {
+  end: PropTypes.string.isRequired,
+  start: PropTypes.string.isRequired,
+  updateDates: PropTypes.func.isRequired,
 }
 
 export default Stats
