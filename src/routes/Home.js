@@ -1,5 +1,5 @@
 import Stats from './Stats'
-import * as Constants from '../Constants'
+import {API_URL} from '../Constants'
 
 import React from 'react'
 import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
@@ -46,7 +46,7 @@ class Home extends Stats {
     )
   }
   dataLoad () {
-    const url = `${Constants.API_URL}/`
+    const url = `${API_URL}/`
     fetch(url).then(this.toJSON)
     .then( response => {
       this.setState({
