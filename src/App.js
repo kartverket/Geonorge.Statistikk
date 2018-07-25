@@ -15,10 +15,18 @@ import Navigation from './components/Navigation'
 class App extends Component {
   constructor () {
     super()
-    const date = moment()
-    this.state = {
-      end: date.format(DATE_DEFAULT),
-      start: date.subtract(7, 'days').format(DATE_DEFAULT),
+    const [ end = '', start = '' ] = typeof(sessionStorage) === 'undefined' ? [] : [sessionStorage.getItem('end'), sessionStorage.getItem('start')]
+    if (moment(end, DATE_DEFAULT, true).isValid() && moment(start, DATE_DEFAULT, true).isValid()) {
+      this.state = {
+        end: end,
+        start: start,
+      }
+    } else {
+      const date = moment()
+      this.state = {
+        end: date.format(DATE_DEFAULT),
+        start: date.subtract(7, 'days').format(DATE_DEFAULT),
+      }
     }
   }
   render() {
@@ -37,6 +45,10 @@ class App extends Component {
     )
   }
   updateDates (start, end) {
+    if (typeof(sessionStorage) !== 'undefined') {
+      sessionStorage.setItem('end', end)
+      sessionStorage.setItem('start', start)
+    }
     this.setState({
       end: end,
       start: start,
