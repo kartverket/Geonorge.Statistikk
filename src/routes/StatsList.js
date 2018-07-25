@@ -37,7 +37,7 @@ class StatsList extends Stats {
       <div className="container">
         <Breadcrumbs paths={paths} />
         <Heading title={name} />
-        <div className="navbar navbar-expand navbar-light bg-light justify-content-between mb-3">
+        <div className="navbar navbar-expand navbar-light bg-light justify-content-between align-items-md-end flex-column flex-md-row mb-3">
           <Daterange end={end} start={start} updateDates={this.props.updateDates} />
           <Durations end={end} start={start} updateDates={this.props.updateDates} />
         </div>

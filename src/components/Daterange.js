@@ -34,14 +34,18 @@ class Daterange extends Component {
     const endDate = moment(chosenEnd, DATE_DEFAULT, true)
     const isDisabled = chosenStart === selectedStart && chosenEnd === selectedEnd ? true : false
     return (
-      <div className="d-flex align-items-center">
-        <small className="mr-2">Viser</small>
-        <DatePicker className="form-control form-control-sm text-center" dateFormat={DATE_READABLE} maxDate={endDate} onChange={this.updateStart.bind(this)} selected={startDate} showWeekNumbers />
-        <small className="mx-2">til</small>
-        <DatePicker className="form-control form-control-sm text-center" dateFormat={DATE_READABLE} minDate={startDate} onChange={this.updateEnd.bind(this)} selected={endDate} showWeekNumbers />
-        <div className={isDisabled ? 'd-none' : 'btn-group btn-group-sm ml-2'} role="group">
-          <button className="btn btn-success" disabled={isDisabled} onClick={this.handleUpdate.bind(this)} type="button">Oppdater</button>
-          <button className="btn btn-danger" disabled={isDisabled} onClick={this.handleAbort.bind(this)} type="button">Avbryt</button>
+      <div className="d-flex align-items-end mb-2 mb-md-0">
+        <div className="mr-2">
+          <small>Fra</small>
+          <DatePicker className="form-control form-control-sm" dateFormat={DATE_READABLE} maxDate={endDate} onChange={this.updateStart.bind(this)} selected={startDate} showWeekNumbers />
+        </div>
+        <div className="mr-2">
+          <small>Til</small>
+          <DatePicker className="form-control form-control-sm" dateFormat={DATE_READABLE} minDate={startDate} onChange={this.updateEnd.bind(this)} selected={endDate} showWeekNumbers />
+        </div>
+        <div className={isDisabled ? 'd-none' : 'btn-group btn-group-sm'} role="group">
+          <button className="btn btn-success" disabled={isDisabled} onClick={this.handleUpdate.bind(this)} type="button">{String.fromCharCode(10003)}</button>
+          <button className="btn btn-danger" disabled={isDisabled} onClick={this.handleAbort.bind(this)} type="button">{String.fromCharCode(10007)}</button>
         </div>
       </div>
     )
