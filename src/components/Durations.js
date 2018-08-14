@@ -35,7 +35,7 @@ class Durations extends Component {
   render () {
     const { end, start } = this.props
     const { durations, expanded } = this.state
-    const selectedIndex = durations.findIndex(duration => (duration.start === start && duration.end === end))
+    const selectedIndex = durations.map(duration => `${duration.start}_${duration.end}`).indexOf(`${start}_${end}`)
     const label = selectedIndex === -1 ? 'Egendefinert' : durations[selectedIndex].label
     return (
       <div className={expanded ? 'dropdown show' : 'dropdown'}>
